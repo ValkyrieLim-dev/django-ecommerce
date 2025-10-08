@@ -2,6 +2,12 @@
 
 {% block content %}
 <h2>{{ product.name }}</h2>
+
+<!-- Product Image -->
+{% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:300px; max-width:100%; object-fit:cover; border-radius:0.5rem; margin-bottom:1rem;">
+{% endif %}
+
 <p>{{ product.description }}</p>
 <p>Price: ₱{{ product.price }}</p>
 <p>Stock: {{ product.stock }}</p>
@@ -19,6 +25,10 @@
 <div class="recommended">
     {% for p in recommended %}
     <div class="card">
+        <!-- Recommended Product Image -->
+        {% if p.image %}
+            <img src="{{ p.image.url }}" alt="{{ p.name }}" style="width:150px; height:150px; object-fit:cover; border-radius:0.5rem;">
+        {% endif %}
         <h4><a href="{% url 'store:product_detail' p.id %}">{{ p.name }}</a></h4>
         <p>₱{{ p.price }}</p>
     </div>
