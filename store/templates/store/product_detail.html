@@ -1,0 +1,30 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<h2>{{ product.name }}</h2>
+<p>{{ product.description }}</p>
+<p>Price: ₱{{ product.price }}</p>
+<p>Stock: {{ product.stock }}</p>
+
+<form action="{% url 'store:cart_add' product.id %}" method="post">
+    {% csrf_token %}
+    <label>Quantity:
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}">
+    </label>
+    <button type="submit">Add to Cart</button>
+</form>
+
+<hr>
+<h3>People also viewed</h3>
+<div class="recommended">
+    {% for p in recommended %}
+    <div class="card">
+        <h4><a href="{% url 'store:product_detail' p.id %}">{{ p.name }}</a></h4>
+        <p>₱{{ p.price }}</p>
+    </div>
+    {% empty %}
+    <p>No recommendations yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
