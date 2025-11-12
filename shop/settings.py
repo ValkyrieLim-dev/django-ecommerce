@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'b5ad0b64886295bab64694a2232d1c8c')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-app-name.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'group1-chocodelight.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
