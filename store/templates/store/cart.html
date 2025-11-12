@@ -1,31 +1,109 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
-<h2>Your Cart</h2>
+<style>
+  .cart-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
 
-{% if cart_items %}
-<table>
+  h2 {
+    text-align: center;
+    color: #4e342e;
+    margin-bottom: 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+  }
+
+  th, td {
+    text-align: center;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #6d4c41;
+    color: white;
+  }
+
+  tr:hover {
+    background-color: #f9f5f3;
+  }
+
+  .subtotal, .total {
+    color: #3e2723;
+    font-weight: bold;
+  }
+
+  .cart-empty {
+    text-align: center;
+    color: #8d6e63;
+    font-size: 1.1rem;
+    padding: 2rem;
+  }
+
+  .checkout-btn {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    background-color: #4e342e;
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+
+  .checkout-btn:hover {
+    background-color: #3e2723;
+  }
+
+  .remove-link {
+    color: #d32f2f;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .remove-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="cart-container">
+  <h2>🛒 Your Chocolate Cart</h2>
+
+  {% if cart_items %}
+  <table>
     <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Subtotal</th>
-        <th>Action</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Action</th>
     </tr>
     {% for item in cart_items %}
     <tr>
-        <td>{{ item.product.name }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>₱{{ item.subtotal }}</td>
-        <td>
-            <a href="{% url 'store:cart_remove' item.product.id %}">Remove</a>
-        </td>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td class="subtotal">₱{{ item.subtotal }}</td>
+      <td><a href="{% url 'store:cart_remove' item.product.id %}" class="remove-link">Remove</a></td>
     </tr>
     {% endfor %}
-</table>
-<p><strong>Total: ₱{{ total }}</strong></p>
-<a href="{% url 'store:checkout' %}"><button>Checkout</button></a>
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %}
+  </table>
 
+  <p class="total" style="text-align:center; font-size:1.2rem;">Total: ₱{{ total }}</p>
+  <a href="{% url 'store:checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+
+  {% else %}
+  <p class="cart-empty">Your cart is empty. 🍫 Add some sweet treats!</p>
+  {% endif %}
+</div>
 {% endblock %}

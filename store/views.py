@@ -101,15 +101,27 @@ import random
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    
-    # --- People also viewed: 3 random other products ---
-    other_products = Product.objects.exclude(pk=pk)
-    recommended = random.sample(list(other_products), min(len(other_products), 3))
+
+    # --- AI-based Recommendations ---
+    # 1. Get products in the same category
+    recommended = list(Product.objects.filter(category=product.category).exclude(pk=pk))
+
+    # 2. If less than 3, fill with random other products
+    if len(recommended) < 3:
+        remaining = Product.objects.exclude(pk__in=[p.id for p in recommended] + [product.id])
+        remaining = list(remaining)
+        needed = 3 - len(recommended)
+        if remaining:
+            recommended += random.sample(remaining, min(len(remaining), needed))
+
+    # 3. Limit to 3
+    recommended = recommended[:3]
 
     return render(request, 'store/product_detail.html', {
         'product': product,
         'recommended': recommended
     })
+    
 def cart_add(request, pk):
     """
     Add a product to the cart (or update quantity if already exists).
