@@ -4,13 +4,13 @@ Django settings for shop project.
 
 import os
 from pathlib import Path
-import dj_database_url  # Make sure this is installed in your environment
+# Make sure this is installed in your environment
 
 # BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
-SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret')  # Use environment variable on Render
+SECRET_KEY = os.environ.get('SECRET_KEY', 'b5ad0b64886295bab64694a2232d1c8c')  # Use environment variable on Render
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['shop.onrender.com', 'localhost', '127.0.0.1']
 
@@ -43,10 +43,12 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 
 # DATABASE
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
 
 # PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
