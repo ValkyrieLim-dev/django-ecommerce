@@ -55,9 +55,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shop.wsgi.application'
 
-# --- Database ---
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+#DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # This tells Django to use SQLite
+        'NAME': BASE_DIR / 'db.sqlite3',         # Path to the SQLite database file
+    }
 }
 # --- Password validation ---
 AUTH_PASSWORD_VALIDATORS = [
