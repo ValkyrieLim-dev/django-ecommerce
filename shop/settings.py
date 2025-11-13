@@ -55,7 +55,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shop.wsgi.application'
 
-#DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # This tells Django to use SQLite
         'NAME': BASE_DIR / 'db.sqlite3',         # Path to the SQLite database file
