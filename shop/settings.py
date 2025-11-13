@@ -97,11 +97,6 @@ INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Your Cloudinary credentials
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dwo2okdbu',
-    'API_KEY': '415216595646991',
-    'API_SECRET': 'YB9GTKCv9DBgs8j1KKegtBsJvEo',
-}
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
