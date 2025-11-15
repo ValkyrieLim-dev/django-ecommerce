@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import Product, Order, OrderItem
 from django.utils.html import format_html
 
+admin.site.site_header = "ChocoDelight Admin"
+admin.site.site_title = "ChocoDelight Dashboard"
+admin.site.index_title = "Welcome to ChocoDelight Administration"
+
+
 # --- Product admin with image upload and preview ---
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'stock', 'category', 'image_tag')

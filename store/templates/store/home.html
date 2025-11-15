@@ -1,0 +1,20 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<div style="max-width:600px;margin:4rem auto;padding:2rem;background:#fff;border-radius:1rem;box-shadow:0 4px 16px rgba(0,0,0,0.1);text-align:center;">
+    <h1>🍫 Welcome to ChocoDelight</h1>
+    <p style="margin:1rem 0;">Your premium chocolate store online!</p>
+
+    {% if user.is_authenticated %}
+        <p>Hello, <strong>{{ user.username }}</strong>!</p>
+        <a href="{% url 'store:product_list' %}" style="display:inline-block;margin:0.5rem;padding:0.75rem 1.5rem;background:#6d4c41;color:white;border-radius:0.5rem;">Shop Now</a>
+        <a href="{% url 'store:logout' %}" style="display:inline-block;margin:0.5rem;padding:0.75rem 1.5rem;background:#8d6e63;color:white;border-radius:0.5rem;">Logout</a>
+        {% if user.is_staff %}
+            <a href="/admin/" style="display:inline-block;margin:0.5rem;padding:0.75rem 1.5rem;background:#4e342e;color:white;border-radius:0.5rem;">Admin Panel</a>
+        {% endif %}
+    {% else %}
+        <a href="{% url 'store:login' %}" style="display:inline-block;margin:0.5rem;padding:0.75rem 1.5rem;background:#6d4c41;color:white;border-radius:0.5rem;">Login</a>
+        <a href="{% url 'store:register' %}" style="display:inline-block;margin:0.5rem;padding:0.75rem 1.5rem;background:#8d6e63;color:white;border-radius:0.5rem;">Register</a>
+    {% endif %}
+</div>
+{% endblock %}

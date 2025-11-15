@@ -1,0 +1,33 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<div style="max-width:400px; margin:3rem auto; padding:2.5rem; background:#fff; border-radius:0.75rem; box-shadow:0 6px 20px rgba(0,0,0,0.1);">
+    <h2 style="text-align:center; margin-bottom:1.5rem; color:#4e342e;">Login to ChocoDelight</h2>
+
+    {% if messages %}
+    <ul style="color:red; margin-bottom:1rem;">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="post" style="display:flex; flex-direction:column; gap:0.75rem;">
+        {% csrf_token %}
+        <label for="id_username" style="font-weight:500;">Username</label>
+        <input type="text" name="username" id="id_username" required style="padding:0.5rem; border:1px solid #ccc; border-radius:0.5rem;">
+
+        <label for="id_password" style="font-weight:500;">Password</label>
+        <input type="password" name="password" id="id_password" required style="padding:0.5rem; border:1px solid #ccc; border-radius:0.5rem;">
+
+        <button type="submit" style="padding:0.6rem; background:#6d4c41; color:#fff; font-weight:500; border:none; border-radius:0.5rem; cursor:pointer; margin-top:0.5rem;">
+            Login
+        </button>
+    </form>
+
+    <div style="display:flex; justify-content:space-between; margin-top:1rem; font-size:0.9rem;">
+        <a href="{% url 'store:register' %}" style="color:#6d4c41;">Register</a>
+        <a href="/admin/" style="color:#6d4c41;">Admin</a>
+    </div>
+</div>
+{% endblock %}

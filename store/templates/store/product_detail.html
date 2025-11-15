@@ -1,40 +1,167 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
+
+<div class="product-page">
+
+<style>
+/* Wrap all styles under .product-page to avoid base.css override */
+.product-page {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f8f3ee;
+    border-radius: 1rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    font-family: 'Inter', sans-serif;
+}
+
+.product-page h2 {
+    color: #4b2e2b;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.product-page .price {
+    font-size: 1.4rem;
+    color: #7b4a35;
+    font-weight: bold;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.product-page .product-img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 0.7rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Form buttons and input */
+.product-page form input[type="number"] {
+    padding: 0.5rem;
+    width: 80px;
+    border-radius: 0.4rem;
+    border: 1px solid #b8a79a;
+    margin-left: 0.5rem;
+}
+
+.product-page form button {
+    background: linear-gradient(135deg, #5c3b32, #7a4f3e) !important;
+    color: white !important;
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.product-page form button:hover {
+    background: linear-gradient(135deg, #7a4f3e, #8e5f4c) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Divider */
+.product-page hr {
+    margin: 2rem 0;
+    border-top: 1px solid #d2c4b8;
+}
+
+/* Recommended Products */
+.product-page .recommended {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.3rem;
+    margin-top: 1.5rem;
+}
+
+.product-page .card {
+    background: #fffaf7 !important;
+    padding: 1rem;
+    border-radius: 0.7rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    text-align: center;
+    transition: 0.3s ease, transform 0.2s;
+    border: 1px solid #e8dcd4;
+}
+
+.product-page .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+.product-page .card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.product-page .card h4 a {
+    color: #4b2e2b !important;
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.product-page .card h4 a:hover {
+    color: #7b4a35 !important;
+    text-decoration: underline;
+}
+
+.product-page .card .price {
+    color: #7b4a35 !important;
+    font-weight: 600;
+}
+
+</style>
+
 <h2>{{ product.name }}</h2>
 
-<!-- Product Image -->
 {% if product.image %}
-    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:300px; max-width:100%; object-fit:cover; border-radius:0.5rem; margin-bottom:1rem;">
+    <img class="product-img" src="{{ product.image.url }}" alt="{{ product.name }}">
 {% endif %}
 
 <p>{{ product.description }}</p>
-<p>Price: ₱{{ product.price }}</p>
+<p class="price">₱{{ product.price }}</p>
 <p>Stock: {{ product.stock }}</p>
 
 <form action="{% url 'store:cart_add' product.id %}" method="post">
     {% csrf_token %}
-    <label>Quantity:
+    <label>
+        Quantity:
         <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}">
     </label>
+    <br>
     <button type="submit">Add to Cart</button>
 </form>
 
 <hr>
-<h3>People also viewed</h3>
+
+<h3 style="color:#4b2e2b; font-family: 'Playfair Display', serif;">People also viewed</h3>
+
 <div class="recommended">
     {% for p in recommended %}
     <div class="card">
-        <!-- Recommended Product Image -->
         {% if p.image %}
-            <img src="{{ p.image.url }}" alt="{{ p.name }}" style="width:150px; height:150px; object-fit:cover; border-radius:0.5rem;">
+            <img src="{{ p.image.url }}" alt="{{ p.name }}">
         {% endif %}
         <h4><a href="{% url 'store:product_detail' p.id %}">{{ p.name }}</a></h4>
-        <p>₱{{ p.price }}</p>
+        <p class="price">₱{{ p.price }}</p>
     </div>
     {% empty %}
     <p>No recommendations yet.</p>
     {% endfor %}
+</div>
+
 </div>
 
 {% endblock %}

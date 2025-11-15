@@ -15,9 +15,10 @@
     text-align: center;
     color: #4e342e;
     margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
   }
 
-  p {
+  p.total {
     text-align: center;
     font-weight: bold;
     color: #3e2723;
@@ -42,12 +43,13 @@
     border: 1px solid #ccc;
     font-size: 1rem;
     box-sizing: border-box;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
 
   input:focus,
   textarea:focus {
     border-color: #6d4c41;
+    box-shadow: 0 0 6px rgba(109,76,65,0.3);
     outline: none;
   }
 
@@ -60,7 +62,7 @@
     display: block;
     width: 100%;
     margin-top: 1.5rem;
-    background-color: #4e342e;
+    background: linear-gradient(135deg, #6d4c41, #8d6e63);
     color: white;
     padding: 0.9rem;
     border: none;
@@ -68,25 +70,30 @@
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
   }
 
   button:hover {
-    background-color: #3e2723;
+    background: linear-gradient(135deg, #8d6e63, #a1887f);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
 </style>
 
 <div class="checkout-container">
   <h2>🍫 Checkout</h2>
-  <p>Total Amount: ₱{{ total }}</p>
+  <p class="total">Total Amount: ₱{{ total }}</p>
 
   <form method="post">
     {% csrf_token %}
+
     <label for="name">Full Name</label>
-    <input id="name" name="name" type="text" placeholder="Enter your name" required>
+    <input id="name" name="name" type="text" placeholder="Enter your name" required
+           value="{% if user.is_authenticated %}{{ user.first_name }} {{ user.last_name }}{% endif %}">
 
     <label for="email">Email</label>
-    <input id="email" name="email" type="email" placeholder="Enter your email">
+    <input id="email" name="email" type="email" placeholder="Enter your email"
+           value="{% if user.is_authenticated %}{{ user.email }}{% endif %}">
 
     <label for="address">Delivery Address</label>
     <textarea id="address" name="address" placeholder="Enter your address"></textarea>

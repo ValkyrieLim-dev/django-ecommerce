@@ -1,18 +1,25 @@
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'
+# Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'b5ad0b64886295bab64694a2232d1c8c')
+# -------------------------
+# SECURITY & DEBUG
+# -------------------------
+SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'group1-chocodelight.onrender.com']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'group1-chocodelight.onrender.com'
+]
 
-# Application definition
+# -------------------------
+# INSTALLED APPS
+# -------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,9 +30,12 @@ INSTALLED_APPS = [
     'store',
 ]
 
+# -------------------------
+# MIDDLEWARE
+# -------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # For static files on Render
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Static files (Render)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -34,8 +44,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# -------------------------
+# URLS / WSGI
+# -------------------------
 ROOT_URLCONF = 'shop.urls'
+WSGI_APPLICATION = 'shop.wsgi.application'
 
+# -------------------------
+# TEMPLATES
+# -------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -52,9 +69,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'shop.wsgi.application'
-
-# --- Database (use SQLite for Render free deploys) ---
+# -------------------------
+# DATABASE (SQLite)
+# -------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -62,7 +79,9 @@ DATABASES = {
     }
 }
 
-# --- Password validation ---
+# -------------------------
+# PASSWORD VALIDATION
+# -------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -70,41 +89,62 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# --- Internationalization ---
+# -------------------------
+# INTERNATIONALIZATION
+# -------------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Manila'
 USE_I18N = True
 USE_TZ = True
 
-# --- Static files (CSS, JS, Images) ---
+# -------------------------
+# STATIC FILES
+# -------------------------
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Enable Whitenoise compression
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# --- Media (Product images, uploads) ---
+# -------------------------
+# MEDIA FILES (LOCAL DEFAULT)
+# -------------------------
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# --- Default primary key field type ---
+# -------------------------
+# CLOUDINARY CONFIG
+# -------------------------
+
+USE_CLOUDINARY = (
+    os.environ.get('CLOUDINARY_CLOUD_NAME') and
+    os.environ.get('CLOUDINARY_API_KEY') and
+    os.environ.get('CLOUDINARY_API_SECRET')
+)
+
+if USE_CLOUDINARY:
+    INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
+
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+        'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    }
+
+# -------------------------
+# DEFAULT PRIMARY KEY FIELD
+# -------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Cloudinary settings
-INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
+LOGIN_URL = 'store:login'
+LOGIN_REDIRECT_URL = 'store:product_list'
+LOGOUT_REDIRECT_URL = 'store:login'
 
-# Use Cloudinary for media files
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Your Cloudinary credentials
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dwo2okdbu',
-    'API_KEY': '415216595646991',
-    'API_SECRET': 'YB9GTKCv9DBgs8j1KKegtBsJvEo',
-}
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "store/static",
+]

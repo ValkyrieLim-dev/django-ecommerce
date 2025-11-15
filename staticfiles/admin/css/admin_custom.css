@@ -1,0 +1,77 @@
+/* Admin body */
+body {
+    background-color: #fefaf6;
+    font-family: 'Inter', sans-serif;
+    color: #3e2723;
+}
+
+/* Header bar */
+#header {
+    background: linear-gradient(90deg, #5d4037, #3e2723);
+    color: #fff;
+}
+
+/* Logo / Site name */
+#header h1, #header h1 a {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    text-decoration: none;
+}
+
+/* Sidebar */
+#content-main {
+    background: #fff8f0;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+/* Tables */
+table {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+}
+
+th {
+    background-color: #5d4037;
+    color: #fff;
+    font-weight: 600;
+}
+
+td {
+    background-color: #fff;
+}
+
+/* Buttons */
+.button, .submit-row input {
+    background: linear-gradient(135deg, #6d4c41, #8d6e63);
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border: none;
+}
+
+.button:hover, .submit-row input:hover {
+    background: linear-gradient(135deg, #8d6e63, #a1887f);
+}
+
+/* Links */
+a {
+    color: #5d4037;
+}
+
+a:hover {
+    color: #3e2723;
+}
+
+/* Forms */
+input, select, textarea {
+    border-radius: 6px;
+    border: 1px solid #c7bbb4;
+    padding: 0.5rem;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: #6d4c41;
+    outline: none;
+}
