@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'group1-chocodelight.onrender.com']
 
 # --- Installed apps ---
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,21 +38,6 @@ ROOT_URLCONF = 'shop.urls'
 WSGI_APPLICATION = 'shop.wsgi.application'
 
 # --- Templates ---
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
 
 # --- Database ---
 DATABASES = {
@@ -95,7 +81,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  # <- must include your admin folder
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,3 +93,19 @@ TEMPLATES = [
         },
     },
 ]
+
+JAZZMIN_SETTINGS = {
+    # Site info
+    "site_title": "Choco Admin",
+    "site_header": "Choco Admin",
+    "welcome_sign": "Welcome to Choco Dashboard",
+    
+    # Theme
+    "bootswatch_theme": "sandstone",  # light brown / chocolate style
+    "dark_mode_theme": "cyborg",      # optional dark mode
+
+    # Optional: show sidebar icons, navbars, etc.
+    "show_sidebar": True,
+    "show_sidebar_icons": True,
+    "navigation_expanded": True,
+}
